@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
+import BuyButton from  '../../components/green.btn';
+import SellButton from  '../../components/red_btn';
 
 export default function App() {
-  // Este HTML ahora es AUTÓNOMO: él mismo se conecta a Binance
+  
  const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -13,7 +15,7 @@ export default function App() {
         body, html { margin: 0; padding: 0; height: 100%; background-color: #131722; overflow: hidden; }
         #chart { width: 100%; height: 100vh; }
       </style>
-      <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+      <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script> 
     </head>
     <body>
       <div id="chart"></div>
@@ -52,8 +54,8 @@ export default function App() {
             });
           };
 
-          // Intentar historial sin que el error rompa el script
-          fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=100')
+          // historial de 100
+          fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1s&limit=100')
             .then(res => res.json())
             .then(data => {
               const history = data.map(d => ({
@@ -75,19 +77,46 @@ export default function App() {
     </body>
     </html>
   `;
+  
+  
+  const comprar = () => {
+    console.log("Orden de compra enviada");
+    if (Platform.OS === 'web') {
+      alert("Comprando");
+    }
+  };
+  const vender = () => {
+    console.log("Orden de venta enviada");
+    if (Platform.OS === 'web') {
+      alert("Vendiendo");
+    }
+  };
+
+
 
   if (Platform.OS === 'web') {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>BTC / USDT (PC Mode)</Text>
+          <Text style={styles.title}>BTC / USDT (Modo Pc)</Text>
         </View>
         <iframe 
           srcDoc={htmlContent} 
           style={{ flex: 1, border: 'none' }} 
           title="trading-chart"
         />
+        <View style={styles.actions}>
+          <BuyButton onPress={comprar} />
+          <SellButton onPress={vender} />
+        </View>
+
+
+
       </View>
+
+
+
+
     );
   }
 
@@ -108,5 +137,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#131722' },
   header: { padding: 20, backgroundColor: '#1e222d', borderBottomWidth: 1, borderBottomColor: '#2a2e39' },
-  title: { color: 'white', fontSize: 18, fontWeight: 'bold' }
+  title: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+  actions: {
+    padding: 15,
+    backgroundColor: '#1e222d', 
+    borderTopWidth: 1,
+    borderTopColor: '#2a2e39',
+  }
 });
+  
+
+
+
