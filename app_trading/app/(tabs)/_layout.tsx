@@ -1,33 +1,34 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+    <Tabs screenOptions={{ 
+      headerShown: false, 
+      tabBarStyle: { backgroundColor: '#1e222d', borderTopColor: '#2a2e39' },
+      tabBarActiveTintColor: '#FCD535', // Color amarillo Binance cuando está seleccionado
+      tabBarInactiveTintColor: '#848E9C'
+    }}>
       <Tabs.Screen
-        name="index"
+        name="markets"
         options={{
-          title: 'Home',
+          title: 'Mercados',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="trading"
         options={{
-          title: 'Explore',
+          title: 'Trading',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.right" color={color} />,
         }}
       />
     </Tabs>
