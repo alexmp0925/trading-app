@@ -24,7 +24,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#26a69a', // El mismo verde que usas en las velas (upColor)
+    backgroundColor: '#26a69a',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 6,
